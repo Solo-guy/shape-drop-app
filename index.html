@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#1a1c2c">
+<meta name="format-detection" content="telephone=no">
+<title>Shape Drop</title>
+</head>
+<body>
+<div id="app">
+ <header class="hud">
+  <div class="hc"><span data-i="lvl"></span><b id="lv">1</b></div>
+  <div class="hc"><span data-i="spd"></span><b id="spd">x1.00</b></div>
+  <div class="hc"><span data-i="best"></span><b id="bs">0</b></div>
+  <button id="pBtn" class="icon" aria-label="Pause"><svg viewBox="0 0 8 8"><path d="M2 1h1v6H2zM5 1h1v6H5z"/></svg></button>
+  <div class="prog"><i id="prog"></i><i id="gap"></i></div>
+ </header>
+
+ <main id="stage">
+  <canvas id="c"></canvas>
+  <div id="toast" role="status"></div>
+
+  <section class="ov" id="menu">
+   <h1>SHAPE<br>DROP</h1>
+   <p class="tag" data-i="tag"></p>
+   <div class="tap" data-i="tap"></div>
+   <div class="row">
+    <button id="langBtn" class="chip"></button>
+    <button id="sndBtn" class="chip icon" aria-label="Sound"><svg viewBox="0 0 8 8" id="sndIco"></svg></button>
+    <button id="howBtn" class="chip" data-i="howB"></button>
+   </div>
+   <div class="shop">
+    <div class="links">
+     <button id="pvBtn" class="link" data-i="privacy" hidden></button>
+     <a id="ppLink" class="link" target="_blank" rel="noopener" data-i="privacyPolicy"></a>
+    </div>
+   </div>
+  </section>
+
+  <section class="ov" id="pause" hidden>
+   <h2 data-i="pTitle"></h2>
+   <button id="resumeBtn" class="big" data-i="resume"></button>
+   <button id="pMenuBtn" class="link" data-i="menu"></button>
+  </section>
+
+  <section class="ov" id="over" hidden>
+   <h2 data-i="oTitle"></h2>
+   <p data-i="oText"></p>
+   <div class="num" id="finalLv">1</div>
+   <p id="overMsg"></p>
+   <button id="againBtn" class="big" data-i="again"></button>
+   <button id="oMenuBtn" class="link" data-i="menu"></button>
+  </section>
+
+  <section class="ov" id="win" hidden>
+   <h2 data-i="wTitle"></h2>
+   <p data-i="wText"></p>
+   <button id="endlessBtn" class="big" data-i="endless"></button>
+   <button id="wMenuBtn" class="link" data-i="menu"></button>
+  </section>
+
+  <section class="ov" id="how" hidden>
+   <h2 data-i="howT"></h2>
+   <ul data-i="howL"></ul>
+   <ul class="legend" id="legend"></ul>
+   <button id="howClose" class="big" data-i="close"></button>
+  </section>
+ </main>
+</div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

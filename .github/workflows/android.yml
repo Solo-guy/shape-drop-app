@@ -1,0 +1,67 @@
+# Build Android tự động trên máy chủ GitHub (đã có sẵn Android SDK).
+# - Luôn tạo: shape-drop-debug.apk  (cài thử trực tiếp lên điện thoại)
+# - Nếu đã khai báo 4 secret ký app: tạo thêm shape-drop-release.aab (nộp lên Google Play)
+name: Android build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      KS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Cài thư viện & build web
+        run: |
+          npm ci
+          npm run build
+          npx cap sync android
+
+      - name: Build APK thử (debug)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk ../shape-drop-debug.apk
+
+      - name: Giải mã keystore (nếu có)
+        if: ${{ env.KS != '' }}
+        run: echo "$KS" | base64 -d > $RUNNER_TEMP/release.keystore
+
+      - name: Build AAB phát hành (đã ký)
+        if: ${{ env.KS != '' }}
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/release.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          VERSION_CODE: ${{ github.run_number }}
+        working-directory: android
+        run: |
+          ./gradlew bundleRelease --no-daemon
+          cp app/build/outputs/bundle/release/app-release.aab ../shape-drop-release.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shape-drop-android
+          path: |
+            shape-drop-debug.apk
+            shape-drop-release.aab
+          if-no-files-found: warn

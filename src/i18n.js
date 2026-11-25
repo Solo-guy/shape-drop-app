@@ -1,0 +1,28 @@
+export const TX = {
+  vi: {
+    tag: 'Chui đúng lỗ — sống sót 1000 màn',
+    lvl: 'Màn', spd: 'Tốc độ', best: 'Kỷ lục',
+    tap: 'CHẠM ĐỂ CHƠI', howB: 'Cách chơi',
+    privacy: 'Quyền riêng tư', privacyPolicy: 'Chính sách quyền riêng tư',
+    pTitle: 'Tạm dừng', resume: 'TIẾP TỤC', menu: 'Menu',
+    oTitle: 'Vỡ rồi!', oText: 'Bạn dừng ở màn', newRec: 'Kỷ lục mới!', recIs: 'Kỷ lục: màn ',
+    again: 'CHƠI LẠI',
+    wTitle: 'Chinh phục 1000 màn!', wText: 'Bạn đã chui qua lỗ duy nhất, vừa khít, ở tốc độ tối đa.', endless: 'CHƠI TIẾP', endlessT: 'Chế độ vô tận',
+    faster: 'Tốc độ tăng: x', last: 'Màn 1000 — chỉ còn 1 lỗ!',  close: 'ĐÓNG',
+    howT: 'Cách chơi',
+    howL: '<li>Bạn là một hình học. Kéo ngón tay sang trái/phải để di chuyển (máy tính: phím ← →).</li><li>Mỗi bức tường rơi là <b>một màn</b>. Chỉ lỗ <b>đúng hình bạn</b> mới cho đi qua — lỗ khác là bẫy.</li><li>Ô <b>NEXT</b> cho biết bạn sẽ biến thành hình gì sau bức tường này.</li><li>Cứ 10 màn tốc độ rơi tăng một bậc. Mỗi màn, khe hở quanh lỗ hẹp lại; đến màn 1000 chỉ còn đúng 1 lỗ vừa khít.</li><li>Thua là chơi lại từ màn 1.</li>',
+  },
+  en: {
+    tag: 'Fit the hole — survive 1000 levels',
+    lvl: 'Level', spd: 'Speed', best: 'Best',
+    tap: 'TAP TO PLAY', howB: 'How to play',
+    privacy: 'Privacy', privacyPolicy: 'Privacy policy',
+    pTitle: 'Paused', resume: 'RESUME', menu: 'Menu',
+    oTitle: 'Shattered!', oText: 'You reached level', newRec: 'New record!', recIs: 'Best: level ',
+    again: 'PLAY AGAIN',
+    wTitle: 'All 1000 levels cleared!', wText: 'You squeezed through the single, tight hole at top speed.', endless: 'KEEP GOING', endlessT: 'Endless mode',
+    faster: 'Speed up: x', last: 'Level 1000 — only one hole left!',  close: 'CLOSE',
+    howT: 'How to play',
+    howL: '<li>You are a shape. Drag your finger left/right to move (PC: ← → keys).</li><li>Each falling wall is <b>one level</b>. Only the hole <b>matching your shape</b> lets you through — the others are traps.</li><li>The <b>NEXT</b> box shows the shape you will become after this wall.</li><li>Every 10 levels the walls fall faster. Each level the clearance around the hole shrinks; at level 1000 there is a single, perfect-fit hole.</li><li>Lose and you start again from level 1.</li>',
+  },
+};
