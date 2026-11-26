@@ -1,41 +1,38 @@
-# Shape Drop
+# Shape Drop (Unity / C#)
 
-Game pixel né tường rơi: bạn là một hình học và phải chui qua đúng lỗ mang hình của mình. Game có 1000 màn, chạy trên Android, iOS và trình duyệt.
+Game pixel né tường rơi. Bạn là một hình học ngẫu nhiên và phải chui qua đúng lỗ mang hình của mình.
 
-Dự án dùng **Capacitor 8 + Vite**, không phụ thuộc game engine nào. Quảng cáo chạy qua **Google AdMob** (dạng quảng cáo xen kẽ).
+- **150 màn.** Mỗi bức tường rơi xuống là một màn.
+- **Tốc độ khởi đầu theo nhịp Flappy Bird:** tường đi hết màn hình trong khoảng 2 giây, cứ khoảng 1,45 giây lại có tường mới. **Cứ 10 màn tốc độ tăng 8%**, đến màn 150 nhanh gấp khoảng 2,1 lần.
+- **Khe thoát hiểm hẹp lại sau mỗi màn.** Đến màn 150 chỉ còn **đúng 1 lỗ vừa khít**.
+- **Lỗ xuất hiện ngẫu nhiên theo chiều ngang**, kèm lỗ bẫy sai hình. Ô NEXT báo trước hình bạn sắp biến thành.
+- **Thua là chơi lại từ màn 1.** Giao diện có hai ngôn ngữ Việt/Anh. Âm thanh 8-bit và đồ hoạ đều tạo bằng code, dự án không có file ảnh hay âm thanh nào.
 
-## Chạy nhanh
+## Build
 
-```bash
-npm install
-npm run dev        # chơi thử trên trình duyệt
-npm run android    # mở Android Studio (cần cài Android Studio)
-npm run ios        # mở Xcode (cần máy Mac)
-```
+Cần **Unity 6.6 (6000.6.10f1)**. Muốn build thêm bản Android thì cài kèm module **Android Build Support**, gồm cả **OpenJDK** và **Android SDK & NDK Tools**.
 
-Không cài Android Studio thì đẩy dự án lên GitHub. Workflow trong `.github/workflows/android.yml` sẽ tự build ra file APK để cài thử, và file AAB để nộp lên Google Play.
+Nhấp đúp `BUILD-ShapeDrop.bat`. Script chạy Unity ở chế độ nền (batchmode) và tạo ra:
 
-## Cấu trúc
-
-| Đường dẫn | Nội dung |
+| File | Dùng để |
 |---|---|
-| `src/game.js` | Lõi game: hình học, tường, độ khó, vẽ pixel |
-| `src/main.js` | Giao diện, điều khiển, lưu kỷ lục, nút Back Android |
-| `src/ads.js` | AdMob: hỏi đồng ý GDPR/ATT, quảng cáo xen kẽ |
-| `src/config.js` | **ID quảng cáo, nhịp quảng cáo, đường dẫn chính sách**, cần sửa trước khi phát hành |
-| `src/i18n.js` | Chữ tiếng Việt / tiếng Anh |
-| `resources/` | Ảnh gốc icon và màn hình khởi động (`npm run assets` để tạo lại) |
-| `android/`, `ios/` | Project gốc cho từng nền tảng |
-| `docs/HUONG-DAN-XUAT-BAN.md` | **Hướng dẫn từng bước đưa app lên CH Play và App Store** |
-| `docs/privacy-policy.html` | Chính sách quyền riêng tư (song ngữ) |
-| `docs/store-listing.md` | Tên, mô tả, từ khoá cho trang cửa hàng |
+| `Builds/Windows/ShapeDrop.exe` | Chơi trên Windows ngay, không cần cài đặt. Khi mang sang máy khác, chép cả thư mục `Windows`. |
+| `Builds/Android/ShapeDrop.apk` | Cài lên điện thoại Android. Chỉ có khi đã cài module Android. |
+| `Builds/build-report.txt` | Kết quả build. |
 
-## Độ khó
+Trong Unity Editor cũng build được, qua menu **Shape Drop ▸ Build Windows + Android**.
 
-- **Tốc độ khởi đầu** theo nhịp Flappy Bird: tường đi hết màn hình trong khoảng 2 giây, và cứ khoảng 1,45 giây lại có một tường mới.
-- **Mỗi 10 màn**, tốc độ rơi tăng 1,2%. Đến màn 1000 tốc độ gấp khoảng 2,2 lần lúc đầu.
-- **Mỗi màn**, khe hở quanh lỗ hẹp lại, đến màn 1000 thì vừa khít.
-- **Số lỗ:** màn 1–10 có 3 lỗ đúng hình; màn 11–250 có 2 lỗ đúng cộng lỗ bẫy; màn 251–999 có 1 lỗ đúng cộng lỗ bẫy; màn 1000 chỉ còn đúng 1 lỗ.
-- Thua là chơi lại từ màn 1.
+## Mã nguồn
 
-Các con số này nằm ở phần đầu `src/game.js` (`TRAVEL_SEC`, `INTERVAL_SEC`, `speedMult`, `tolOf`, `layout`).
+| File | Nội dung |
+|---|---|
+| `Assets/Scripts/GameCore.cs` | Lõi game: độ khó 150 màn, tường, va chạm, vẽ pixel |
+| `Assets/Scripts/Shapes.cs` | 10 hình học, mặt nạ và sprite pixel |
+| `Assets/Scripts/Px.cs` | Bộ đệm pixel, xuất ra Texture2D (lọc Point) |
+| `Assets/Scripts/GameApp.cs` | Giao diện uGUI dựng bằng code, điều khiển (kéo, phím, nút Back) |
+| `Assets/Scripts/Sfx.cs` | Âm thanh 8-bit tổng hợp bằng code |
+| `Assets/Scripts/Loc.cs` | Chữ tiếng Việt / tiếng Anh |
+| `Assets/Scripts/Ads.cs` | Chỗ gắn quảng cáo AdMob (chưa bật) |
+| `Assets/Editor/ShapeDropBuild.cs` | Cấu hình app (màn hình dọc, icon pixel, IL2CPP ARM64) và build |
+
+Muốn chỉnh độ khó thì sửa lớp `Difficulty` ở đầu file `GameCore.cs`.
